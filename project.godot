@@ -14,3 +14,7 @@ config/name="kk-land"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.25521, 0.521641, 0.975704, 1)

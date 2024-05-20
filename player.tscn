@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dagapyttv6wg7"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_dsmxi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_036xt"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lm1hb"]
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9858, 0)
+script = ExtResource("1_dsmxi")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.838138, 0.545459, 0, -0.545459, 0.838138, 0, 2.84563, 3.60418)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_036xt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_lm1hb")
+skeleton = NodePath("")

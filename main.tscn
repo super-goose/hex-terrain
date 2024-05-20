@@ -1,15 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://cs0jeh0sr1why"]
+[gd_scene load_steps=5 format=3 uid="uid://cs0jeh0sr1why"]
 
-[ext_resource type="PackedScene" uid="uid://28bkajgyajll" path="res://tile.tscn" id="1_m1mwb"]
+[ext_resource type="Script" path="res://main.gd" id="1_ahtbd"]
+[ext_resource type="PackedScene" uid="uid://uf0821nqs5i0" path="res://tile.tscn" id="1_m1mwb"]
+[ext_resource type="PackedScene" uid="uid://dagapyttv6wg7" path="res://player.tscn" id="3_8gtyu"]
+
+[sub_resource type="Environment" id="Environment_707ex"]
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_ahtbd")
 
 [node name="Terrain" type="Node3D" parent="."]
 
 [node name="Tile" parent="Terrain" instance=ExtResource("1_m1mwb")]
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.838138, 0.545459, 0, -0.545459, 0.838138, 0, 5.84563, 7.60418)
+visible = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.57629, 0.817245, 0, -0.817245, 0.57629, 0, -4.13054, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_707ex")
+
+[node name="Player" parent="." instance=ExtResource("3_8gtyu")]
