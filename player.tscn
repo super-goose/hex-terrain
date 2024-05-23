@@ -7,11 +7,11 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_lm1hb"]
 
 [node name="Player" type="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9858, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 5, 2.08165e-12)
 script = ExtResource("1_dsmxi")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.838138, 0.545459, 0, -0.545459, 0.838138, 0, 2.84563, 3.60418)
+transform = Transform3D(1, 0, 0, 0, 0.820372, 0.571831, 0, -0.571831, 0.820372, 0, 2.19132, 3.60418)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_036xt")
