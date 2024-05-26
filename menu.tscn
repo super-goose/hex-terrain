@@ -1,6 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://bfrkmjolspayk"]
+[gd_scene load_steps=22 format=3 uid="uid://bfrkmjolspayk"]
 
 [ext_resource type="Script" path="res://menu.gd" id="1_pntae"]
+[ext_resource type="Texture2D" uid="uid://cvnlm07msts85" path="res://assets/images/tile-coast-a.png" id="2_kbh7b"]
+[ext_resource type="Texture2D" uid="uid://bsm8pdugjjmwf" path="res://assets/images/tile-coast-b.png" id="3_852xo"]
+[ext_resource type="Texture2D" uid="uid://bvt5ngfmrttg4" path="res://assets/images/tile-coast-c.png" id="4_7x47c"]
+[ext_resource type="Texture2D" uid="uid://6bkm6pfiwl34" path="res://assets/images/tile-coast-d.png" id="5_3eldx"]
+[ext_resource type="Texture2D" uid="uid://cyeu4ahhbq0gk" path="res://assets/images/tile-coast-e.png" id="6_eh88e"]
+[ext_resource type="Texture2D" uid="uid://cli1bvkpfqjil" path="res://assets/images/tile-river-a.png" id="7_7sa0s"]
+[ext_resource type="Texture2D" uid="uid://cudx4dq4f3ogk" path="res://assets/images/tile-river-a-curvy.png" id="8_5861s"]
+[ext_resource type="Texture2D" uid="uid://bpoe2addmp3jv" path="res://assets/images/tile-river-b.png" id="9_ksrqa"]
+[ext_resource type="Texture2D" uid="uid://cjhil0b04ti3k" path="res://assets/images/tile-river-c.png" id="10_4xaqo"]
+[ext_resource type="Texture2D" uid="uid://kvpbh8qk03sk" path="res://assets/images/tile-river-d.png" id="11_kw3yv"]
+[ext_resource type="Texture2D" uid="uid://cae2aidnrgyrr" path="res://assets/images/tile-river-e.png" id="12_4wecp"]
+[ext_resource type="Texture2D" uid="uid://cs1wsos20m7o6" path="res://assets/images/tile-river-f.png" id="13_oeimf"]
+[ext_resource type="Texture2D" uid="uid://c712g7wcjicsk" path="res://assets/images/tile-river-g.png" id="14_acvog"]
+[ext_resource type="Texture2D" uid="uid://bpvwir3t8yyxb" path="res://assets/images/tile-river-h.png" id="15_50634"]
+[ext_resource type="Texture2D" uid="uid://c6fvsvua3up7l" path="res://assets/images/tile-river-i.png" id="16_0ofn5"]
+[ext_resource type="Texture2D" uid="uid://ba7oph78ol5bo" path="res://assets/images/tile-river-j.png" id="17_n810f"]
+[ext_resource type="Texture2D" uid="uid://n5kqlqtr7tey" path="res://assets/images/tile-river-k.png" id="18_ewp7a"]
+[ext_resource type="Texture2D" uid="uid://dxj76a2652if" path="res://assets/images/tile-river-l.png" id="19_x8sg1"]
+[ext_resource type="Texture2D" uid="uid://bu3xgwt7oydh1" path="res://assets/images/tile-river-crossing-a.png" id="20_d6ti7"]
+[ext_resource type="Texture2D" uid="uid://qa6t7iq1vdou" path="res://assets/images/tile-river-crossing-b.png" id="21_881wi"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -25,7 +45,7 @@ theme_override_constants/margin_bottom = 200
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer"]
 layout_mode = 2
-color = Color(0.25176, 0, 0.0069823, 0.529412)
+color = Color(0, 0, 0, 0.529412)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -35,6 +55,16 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_constants/separation = 72
+
+[node name="CCWButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "CCW"
+
+[node name="CWButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "CW"
 
 [node name="WaterButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -53,9 +83,121 @@ theme_override_font_sizes/font_size = 72
 text = "close
 "
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
 
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 24
+columns = 10
+
+[node name="CoastAButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_kbh7b")
+
+[node name="CoastBButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_852xo")
+
+[node name="CoastCButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("4_7x47c")
+
+[node name="CoastDButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_3eldx")
+
+[node name="CoastEButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("6_eh88e")
+
+[node name="RiverAButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("7_7sa0s")
+
+[node name="RiverACurvyButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("8_5861s")
+
+[node name="RiverBButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("9_ksrqa")
+
+[node name="RiverCButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("10_4xaqo")
+
+[node name="RiverDButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("11_kw3yv")
+
+[node name="RiverEButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("12_4wecp")
+
+[node name="RiverFButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("13_oeimf")
+
+[node name="RiverGButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("14_acvog")
+
+[node name="RiverHButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("15_50634")
+
+[node name="RiverIButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("16_0ofn5")
+
+[node name="RiverJButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("17_n810f")
+
+[node name="RiverKButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("18_ewp7a")
+
+[node name="RiverLButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("19_x8sg1")
+
+[node name="RiverCrossingAButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("20_d6ti7")
+
+[node name="RiverCrossingBButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("21_881wi")
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CCWButton" to="." method="_on_ccw_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CWButton" to="." method="_on_cw_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/WaterButton" to="." method="_on_water_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GrassButton" to="." method="_on_grass_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/CoastAButton" to="." method="_on_coast_a_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/CoastBButton" to="." method="_on_coast_b_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/CoastCButton" to="." method="_on_coast_c_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/CoastDButton" to="." method="_on_coast_d_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/CoastEButton" to="." method="_on_coast_e_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverAButton" to="." method="_on_river_a_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverACurvyButton" to="." method="_on_river_a_curvy_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverBButton" to="." method="_on_river_b_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverCButton" to="." method="_on_river_c_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverDButton" to="." method="_on_river_d_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverEButton" to="." method="_on_river_e_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverFButton" to="." method="_on_river_f_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverGButton" to="." method="_on_river_g_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverHButton" to="." method="_on_river_h_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverIButton" to="." method="_on_river_i_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverJButton" to="." method="_on_river_j_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverKButton" to="." method="_on_river_k_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverLButton" to="." method="_on_river_l_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverCrossingAButton" to="." method="_on_river_crossing_a_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/GridContainer/RiverCrossingBButton" to="." method="_on_river_crossing_b_button_pressed"]

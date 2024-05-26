@@ -34,4 +34,6 @@ utility_reload={
 
 [rendering]
 
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.25521, 0.521641, 0.975704, 1)
