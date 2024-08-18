@@ -8,6 +8,7 @@ var Tile = preload("res://tile.tscn")
 var tiles = {}
 
 func _ready():
+	randomize()
 	# define the tiles
 	for x in range(width):
 		for z in range(length):
@@ -16,8 +17,24 @@ func _ready():
 			
 			# decide if the tile is different
 			# if we are near the edge, make it be water
-			if x < 2 or x > width - 3 or z < 2 || z > length - 3:
+			# determine min distance from the edge
+			var dx = min(x, width - 1 - x)
+			var dz = min(z, length - 1 - z)
+			var d_edge = min(dx, dz)
+			
+			if d_edge < 2:
 				type = 'water'
+			elif d_edge < 5:
+				var r = randi() % 3
+				
+				if r < d_edge - 2:
+					print('this one got flipped back!')
+					type = 'grass'
+				else:
+					print('this one isn\'t going to be flipped')
+					type = 'water'
+			#elif d_edge > 8:
+				
 			
 			# add tile to `tiles` dict
 			tiles[to_coords_key(x, z)] = { 'type': type, 'rotation': 0, 'coords': { 'x': x, 'z': z } }
@@ -40,15 +57,15 @@ func add_tile_to_scene(coords, type, rot):
 	if z % 2 == 0:
 		x_offset += 1
 
-	if type == 'grass':
-		var neighbors = get_neighbors(x, z)
-		var water_neighbors = neighbors.filter(filter__water_tiles)
-		if water_neighbors.size() > 0:
-			print('----------')
-			print(p)
-			
-			print(water_neighbors)
-			modified_type = 'coast_c'
+	#if type == 'grass':
+		#var neighbors = get_neighbors(x, z)
+		#var water_neighbors = neighbors.filter(filter__water_tiles)
+		#if water_neighbors.size() > 0:
+			#print('----------')
+			#print(p)
+			#
+			#print(water_neighbors)
+			#modified_type = 'coast_c'
 		
 	var t = Tile.instantiate()
 	t.position.x = x_offset
