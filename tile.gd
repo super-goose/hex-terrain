@@ -1,3 +1,4 @@
+@tool
 extends Node3D
 
 var type = 'grass'
@@ -75,7 +76,7 @@ func set_mesh():
 		'coast_d':
 			$MeshContainer.add_child(HexCoastD.instantiate())
 		'coast_e':
-			$MeshContainer.add_child(HexCoastD.instantiate())
+			$MeshContainer.add_child(HexCoastE.instantiate())
 		'river_a':
 			$MeshContainer.add_child(HexRiverA.instantiate())
 		'river_a_curvy':

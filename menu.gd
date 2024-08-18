@@ -33,31 +33,21 @@ func _on_coast_a_button_pressed():
 	if current_node:
 		current_node.set_type('coast_a')
 
-
-
 func _on_coast_b_button_pressed():
 	if current_node:
 		current_node.set_type('coast_b')
-
-
 
 func _on_coast_c_button_pressed():
 	if current_node:
 		current_node.set_type('coast_c')
 
-
-
 func _on_coast_d_button_pressed():
 	if current_node:
 		current_node.set_type('coast_d')
 
-
-
 func _on_coast_e_button_pressed():
 	if current_node:
 		current_node.set_type('coast_e')
-
-
 
 func _on_river_a_button_pressed():
 	if current_node:
@@ -128,4 +118,3 @@ func _on_ccw_button_pressed():
 func _on_cw_button_pressed():
 	if current_node:
 		current_node.rotate_tile('cw')
-
