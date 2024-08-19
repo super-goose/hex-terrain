@@ -18,6 +18,7 @@ func _ready():
 			# decide if the tile is different
 			# if we are near the edge, make it be water
 			# determine min distance from the edge
+			var elevation = 0
 			var dx = min(x, width - 1 - x)
 			var dz = min(z, length - 1 - z)
 			var d_edge = min(dx, dz)
@@ -27,31 +28,41 @@ func _ready():
 			elif d_edge < 5:
 				var r = randi() % 3
 				
-				if r < d_edge - 2:
-					print('this one got flipped back!')
+				if r < d_edge - 1:
 					type = 'grass'
 				else:
-					print('this one isn\'t going to be flipped')
 					type = 'water'
-			#elif d_edge > 8:
+			elif d_edge > 6:
+				elevation += d_edge - 6
 				
 			
 			# add tile to `tiles` dict
-			tiles[to_coords_key(x, z)] = { 'type': type, 'rotation': 0, 'coords': { 'x': x, 'z': z } }
+			tiles[to_coords_key(x, z)] = {
+				'type': type,
+				'rotation': 0,
+				'coords': { 'x': x, 'z': z },
+				'elevation': elevation,
+			}
 	
 	# add the tiles
 	for coord in tiles:
-		add_tile_to_scene(coord, tiles[coord]['type'], tiles[coord]['rotation'])
+		add_tile_to_scene(
+			coord,
+			tiles[coord]['type'],
+			tiles[coord]['rotation'],
+			tiles[coord]['elevation'],
+		)
 
 '''
 add each tile to the scene; determine the type of tile to use,
 based on the neighboring tiles; determine rotation
 '''
-func add_tile_to_scene(coords, type, rot):
+func add_tile_to_scene(coords, type, rotation, elevation):
 	var modified_type = type
 	var p = from_coords_key(coords)
 	var x = p[0]
 	var z = p[1]
+	var y_offset = elevation / 2.0
 	var z_offset = z * (3 / sqrt(3)) - ((3 * length / 2) / sqrt(3))
 	var x_offset = x * 2 - width
 	if z % 2 == 0:
@@ -70,6 +81,7 @@ func add_tile_to_scene(coords, type, rot):
 	var t = Tile.instantiate()
 	t.position.x = x_offset
 	t.position.z = z_offset
+	t.position.y = y_offset
 
 	t.set_type(modified_type)
 	add_child(t)
