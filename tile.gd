@@ -43,6 +43,10 @@ func _on_static_body_3d_input_event(camera, event, position, normal, shape_idx):
 		#print("normal", normal)
 		#print("shape_idx", shape_idx)
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		print(coords)
+
 func set_type(t):
 	type = t
 	set_mesh()

@@ -50,7 +50,6 @@ func calculate_velocity(direction: Vector3, delta: float):
 		#rotation.y = atan2(direction.x, direction.z)
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
-		print(rotation.y)
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
@@ -63,26 +62,3 @@ func calculate_velocity(direction: Vector3, delta: float):
 		state = 'jump'
 	elif velocity.x + velocity.z != 0:
 		state = 'run'
-
-
-#extends CharacterBody3D
-#
-#func _ready():
-	#pass
-#
-#func _physics_process(delta):
-	#var new_v2 = Vector3.ZERO
-	#if Input.is_action_pressed("ui_up"):
-		#new_v2.z -= 5
-	#if Input.is_action_pressed("ui_down"):
-		#new_v2.z += 5
-	#if Input.is_action_pressed("ui_left"):
-		#new_v2.x -= 5
-	#if Input.is_action_pressed("ui_right"):
-		#new_v2.x += 5
-	#new_v2 = new_v2.normalized() * 5
-	#velocity.x = new_v2.x
-	#velocity.z = new_v2.z
-	#velocity.y = -10
-	#move_and_slide()
-	#
