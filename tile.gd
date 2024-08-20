@@ -3,6 +3,7 @@ extends Node3D
 
 var type = 'grass'
 
+var data
 var coords = Vector3i.ZERO
 var get_neighbors: Callable
 
@@ -35,7 +36,10 @@ func _ready():
 
 func _on_static_body_3d_input_event(camera, event, position, normal, shape_idx):
 	if event is InputEventMouseButton:
-		Events.show_tile_menu.emit(self)
+		if Engine.is_editor_hint():
+			print(data)
+		else:
+			Events.show_tile_menu.emit(self)
 		#print(self)
 		#print("camera", camera)
 		#print("event", event)
@@ -50,6 +54,12 @@ func _unhandled_input(event: InputEvent) -> void:
 func set_type(t):
 	type = t
 	set_mesh()
+
+func set_data(d):
+	data = d
+	var coords_str = "(%s, %s)" % [data['coords']['x'], data['coords']['z']]
+	var cube_str = "(%s, %s, %s)" % [data['cube']['q'], data['cube']['r'], data['cube']['s']]
+	$Label3D.text = coords_str + '\n' + cube_str
 
 func set_coords(x, z):
 	coords = Vector3i(x, 0, z)

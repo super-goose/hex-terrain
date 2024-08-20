@@ -20,4 +20,10 @@ shape = SubResource("CylinderShape3D_s2vcx")
 
 [node name="Decoration" type="Node3D" parent="."]
 
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.1, 0)
+text = "this is some text
+and here is more"
+font_size = 48
+
 [connection signal="input_event" from="StaticBody3D" to="." method="_on_static_body_3d_input_event"]
