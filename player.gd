@@ -44,7 +44,7 @@ func get_direction(delta: float):
 func calculate_velocity(direction: Vector3, delta: float):
 	# GRAVITY
 	if not is_on_floor() and gravity_toggle:
-		velocity.y -= gravity * delta
+		velocity.y -= gravity * delta * 2
 
 	if direction:
 		#rotation.y = atan2(direction.x, direction.z)

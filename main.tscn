@@ -14,6 +14,9 @@ script = ExtResource("1_ahtbd")
 [node name="Terrain" parent="." instance=ExtResource("2_rg7bv")]
 width = 20
 length = 30
+q_radius = 10
+r_radius = 10
+s_radius = 10
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.57629, 0.817245, 0, -0.817245, 0.57629, 0, -4.13054, 0)

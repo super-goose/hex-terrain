@@ -57,7 +57,7 @@ func set_type(t):
 
 func set_data(d):
 	data = d
-	var coords_str = "(%s, %s)" % [data['coords']['x'], data['coords']['z']]
+	var coords_str = "(%s, %s)" % [data['oddr']['x'], data['oddr']['z']]
 	var cube_str = "(%s, %s, %s)" % [data['cube']['q'], data['cube']['r'], data['cube']['s']]
 	$Label3D.text = coords_str + '\n' + cube_str
 
