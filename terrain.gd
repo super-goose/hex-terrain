@@ -1,43 +1,39 @@
 @tool
 extends Node3D
 
-@export var width = 10
-@export var length = 10
 @export var q_radius = 5
 @export var r_radius = 5
 @export var s_radius = 5
+@export var max_distance_for_elevation = 5
+@export var noise = FastNoiseLite.new()
+
 
 var Tile = preload("res://tile.tscn")
 var tiles = {}
 
-func add_tile_to_map(q, r, s):
+func add_tile_to_map(q, r, s, noise_value):
 	var type = 'grass'
+	var elevation = int(10 * noise_value + 3)
 	
 	# decide if the tile is different
 	# if we are near the edge, make it be water
 	# determine min distance from the edge
-	var elevation = 0
-	#var dx = min(x, width - 1 - x)
-	#var dz = min(z, length - 1 - z)
-	#var d_edge = min(dx, dz)
 	var dq = q_radius - abs(q)
 	var dr = r_radius - abs(r)
 	var ds = s_radius - abs(s)
 	
-	
 	var d_edge = min(dq, dr, ds)
 	
-	if d_edge < 2:
+	if d_edge < 1 or elevation < 0:
 		type = 'water'
-	elif d_edge < 5:
-		var coef = randi() % 3
-		
-		if coef < d_edge - 1:
-			type = 'grass'
-		else:
-			type = 'water'
-	elif d_edge > 6:
-		elevation += d_edge - 6
+		elevation = 0
+	#elif d_edge < 5:
+		#var coef = randi() % 3
+		#
+		#if coef < d_edge - 2:
+			#type = 'grass'
+		#else:
+			#type = 'water'
 
 	var coord = { 'q': q, 'r': r, 's': s }
 	tiles[to_cubic_coords_key({ 'q': q, 'r': r, 's': s })] = {
@@ -48,15 +44,48 @@ func add_tile_to_map(q, r, s):
 		'elevation': elevation,
 	}
 
-func _ready():
-	randomize()
-	# define the tiles
+func get_distance_to_nearest_water(coord):
+	# quick and dirty
+	for d in range(0, max_distance_for_elevation):
+		var all_hexes = get_all_hexes_within_distance(d, coord)
+		if all_hexes.filter(
+			func filter__water_tiles_from_coord_keys(coord):
+				return coord in tiles and filter__water_tiles(tiles[coord])
+		).size():
+			return d
+	return max_distance_for_elevation
+
+func assign_elevations():
+	for q in range(-q_radius, q_radius + 1):
+		for r in range(-r_radius, r_radius + 1):
+			var s = -q - r
+			var coord = { 'q': q, 'r': r, 's': s }
+			var distance_to_water = get_distance_to_nearest_water(coord)
+			if distance_to_water - 1 > 0:
+				if to_cubic_coords_key(coord) in tiles:
+					tiles[to_cubic_coords_key(coord)]['elevation'] = distance_to_water - 1
+
+func generate_map():
+	var noise = FastNoiseLite.new()
+	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	noise.seed = randi()
+	noise.fractal_octaves = 5
+	noise.fractal_gain = 0.5
+	noise.frequency = 0.01
+
 	for q in range(-q_radius, q_radius + 1):
 		for r in range(-r_radius, r_radius + 1):
 			for s in range(-s_radius, s_radius + 1):
 				if q + r + s == 0:
-					add_tile_to_map(q, r, s)
+					add_tile_to_map(q, r, s, noise.get_noise_3d(q, r, s))
 
+
+func _ready():
+	randomize()
+	# define the tiles
+	generate_map()
+	
+	assign_elevations()
 	
 	# add the tiles
 	for coord in tiles:
@@ -78,9 +107,9 @@ func add_tile_to_scene(coords, tile):
 	var p = cube_to_oddr(p_cube)
 	var x = p['x']
 	var z = p['z']
-	var y_offset = elevation / 2.0
-	var z_offset = z * (3 / sqrt(3)) - ((3 * length / 2) / sqrt(3))
-	var x_offset = x * 2 - width
+	var y_offset = max(elevation / 2.0, 0)
+	var z_offset = z * (3 / sqrt(3))
+	var x_offset = x * 2
 	if z & 1 == 1:
 		x_offset += 1
 
@@ -106,8 +135,7 @@ func add_tile_to_scene(coords, tile):
 func filter__water_tiles(ht):
 	if not ht:
 		return false
-	if ht['type'] == 'water':
-		return true
+	return ht['type'] == 'water'
 
 func get_neighbors(x, z):
 	return[
@@ -121,6 +149,10 @@ func get_neighbors(x, z):
 		func _neighbor_map(key):
 			return tiles[key] if tiles.has(key) else null
 	)
+
+'''
+UTIL FUNCTIONS
+'''
 
 func to_coords_key(x, z):
 	return "%s,%s" % [x, z]
@@ -148,3 +180,13 @@ func oddr_to_cube(hex):
 	var q = hex['x'] - (hex['z'] - (hex['z']&1)) / 2
 	var r = hex['z']
 	return { 'q': q, 'r': r, 's': -q-r }
+
+func get_all_hexes_within_distance(d, hex):
+	var results = []
+	for q in range(hex['q'] - d, hex['q'] + d + 1):
+		for r in range(hex['r'] - d, hex['r'] + d + 1):
+			var s = -q - r
+			var coord = to_cubic_coords_key({ 'q': q, 'r': r, 's': s })
+			if coord in tiles:
+				results.append(coord)
+	return results
