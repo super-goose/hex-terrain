@@ -73,6 +73,10 @@ func rotate_tile(d):
 	elif d == 'cw':
 		rotate_y(-PI / 3)
 
+func set_elevation(e: int):
+	scale.y = e + 1
+	position.y = e
+
 func set_mesh():
 	for child in $MeshContainer.get_children():
 		$MeshContainer.remove_child(child)

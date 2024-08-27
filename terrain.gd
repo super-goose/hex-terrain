@@ -125,9 +125,10 @@ func add_tile_to_scene(coords, tile):
 
 	var t = Tile.instantiate()
 	t.position.x = x_offset
-	t.position.y = y_offset
+	#t.position.y = y_offset
 	t.position.z = z_offset
 	t.set_data(tile)
+	t.set_elevation(max(elevation / 2.0, 0))
 
 	t.set_type(modified_type)
 	add_child(t)
