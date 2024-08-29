@@ -75,6 +75,14 @@ func generate_map():
 					add_tile_to_map(q, r, s, noise.get_noise_3d(q, r, s))
 
 func apply_natural_features():
+	var noise = FastNoiseLite.new()
+	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	noise.seed = randi()
+	noise.fractal_type = FastNoiseLite.FRACTAL_RIDGED
+	noise.fractal_octaves = 5
+	noise.fractal_gain = 0.5
+	noise.frequency = 0.01
+
 	for q in range(-q_radius, q_radius + 1):
 		for r in range(-r_radius, r_radius + 1):
 			var s = -r - q
@@ -84,14 +92,15 @@ func apply_natural_features():
 			if tiles[to_cubic_coords_key(coord)]['type'] == 'water':
 				continue
 
-			var variant = randi_range(0, 10)
-			if variant == 0:
+			var variant = int(10 * noise.get_noise_3d(q, r, s))
+			print(variant)
+			if variant in [2, 5, 6]:
 				tiles[to_cubic_coords_key(coord)]['decoration'] = 'tree'
-			if variant == 1:
+			if variant == -5:
 				tiles[to_cubic_coords_key(coord)]['decoration'] = 'rock'
 			if variant == 2:
 				tiles[to_cubic_coords_key(coord)]['decoration'] = 'hill'
-			if variant == 3:
+			if variant > 6:
 				tiles[to_cubic_coords_key(coord)]['decoration'] = 'tree-hill'
 			
 func _ready():

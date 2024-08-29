@@ -97,6 +97,9 @@ func set_elevation(e: int):
 func set_decoration_mesh():
 	for child in $DecorationContainer.get_children():
 		$DecorationContainer.remove_child(child)
+	if decoration == 'none':
+		return
+	$DecorationContainer.rotation.y = randi_range(0, 5) * PI / 6
 	match decoration:
 		'tree':
 			$DecorationContainer.add_child(Tree0.instantiate() if flip_a_coin() else Tree1.instantiate())
@@ -106,8 +109,6 @@ func set_decoration_mesh():
 			$DecorationContainer.add_child(Hill0.instantiate() if flip_a_coin() else Hill1.instantiate())
 		'tree-hill':
 			$DecorationContainer.add_child(TreeHill0.instantiate() if flip_a_coin() else TreeHill1.instantiate())
-		'none':
-			pass
 		_:
 			print('not implemented:', decoration)
 
