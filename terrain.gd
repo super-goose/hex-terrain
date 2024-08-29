@@ -27,13 +27,6 @@ func add_tile_to_map(q, r, s, noise_value):
 	if d_edge < 1 or elevation < 0:
 		type = 'water'
 		elevation = 0
-	#elif d_edge < 5:
-		#var coef = randi() % 3
-		#
-		#if coef < d_edge - 2:
-			#type = 'grass'
-		#else:
-			#type = 'water'
 
 	var coord = { 'q': q, 'r': r, 's': s }
 	tiles[to_cubic_coords_key({ 'q': q, 'r': r, 's': s })] = {
@@ -55,7 +48,9 @@ func get_distance_to_nearest_water(coord):
 			return d
 	return max_distance_for_elevation
 
+'''deprecate this'''
 func assign_elevations():
+	print('assigning elevations')
 	for q in range(-q_radius, q_radius + 1):
 		for r in range(-r_radius, r_radius + 1):
 			var s = -q - r
@@ -79,13 +74,32 @@ func generate_map():
 				if q + r + s == 0:
 					add_tile_to_map(q, r, s, noise.get_noise_3d(q, r, s))
 
+func apply_natural_features():
+	for q in range(-q_radius, q_radius + 1):
+		for r in range(-r_radius, r_radius + 1):
+			var s = -r - q
+			if s > s_radius or s < -s_radius:
+				continue
+			var coord = { 'q': q, 'r': r, 's': s }
+			if tiles[to_cubic_coords_key(coord)]['type'] == 'water':
+				continue
 
+			var variant = randi_range(0, 10)
+			if variant == 0:
+				tiles[to_cubic_coords_key(coord)]['decoration'] = 'tree'
+			if variant == 1:
+				tiles[to_cubic_coords_key(coord)]['decoration'] = 'rock'
+			if variant == 2:
+				tiles[to_cubic_coords_key(coord)]['decoration'] = 'hill'
+			if variant == 3:
+				tiles[to_cubic_coords_key(coord)]['decoration'] = 'tree-hill'
+			
 func _ready():
-	randomize()
 	# define the tiles
 	generate_map()
 	
-	assign_elevations()
+	apply_natural_features()
+	#assign_elevations()
 	
 	# add the tiles
 	for coord in tiles:
@@ -129,8 +143,11 @@ func add_tile_to_scene(coords, tile):
 	t.position.z = z_offset
 	t.set_data(tile)
 	t.set_elevation(max(elevation / 2.0, 0))
-
 	t.set_type(modified_type)
+
+	if 'decoration' in tile:
+		t.set_decoration(tile['decoration'])
+
 	add_child(t)
 
 func filter__water_tiles(ht):

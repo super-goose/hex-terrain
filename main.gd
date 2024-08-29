@@ -1,6 +1,9 @@
 #@tool
 extends Node3D
 
+func _ready():
+	randomize()
+
 '''
 pause, reload, etc
 '''

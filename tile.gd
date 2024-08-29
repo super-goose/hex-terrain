@@ -2,6 +2,7 @@
 extends Node3D
 
 var type = 'grass'
+var decoration = 'none'
 
 var data
 var coords = Vector3i.ZERO
@@ -31,6 +32,18 @@ var HexRiverL = load("res://assets/land/rivers/hex_river_L.gltf")
 var HexRiverCrossingA = load("res://assets/land/rivers/hex_river_crossing_A.gltf")
 var HexRiverCrossingB = load("res://assets/land/rivers/hex_river_crossing_B.gltf")
 
+var Tree0 = load("res://assets/decoration/nature/trees_A_medium.gltf")
+var Tree1 = load("res://assets/decoration/nature/trees_A_small.gltf")
+var Rock0 = load("res://assets/decoration/nature/rock_single_C.gltf")
+var Rock1 = load("res://assets/decoration/nature/rock_single_E.gltf")
+var Hill0 = load("res://assets/decoration/nature/hills_B.gltf")
+var Hill1 = load("res://assets/decoration/nature/hills_C.gltf")
+var TreeHill0 = load("res://assets/decoration/nature/hills_B_trees.gltf")
+var TreeHill1 = load("res://assets/decoration/nature/hills_C_trees.gltf")
+
+func flip_a_coin():
+	return randi_range(0, 1) == 0
+
 func _ready():
 	set_mesh()
 
@@ -55,6 +68,10 @@ func set_type(t):
 	type = t
 	set_mesh()
 
+func set_decoration(d):
+	decoration = d
+	set_decoration_mesh()
+
 func set_data(d):
 	data = d
 	var coords_str = "(%s, %s)" % [data['oddr']['x'], data['oddr']['z']]
@@ -74,8 +91,25 @@ func rotate_tile(d):
 		rotate_y(-PI / 3)
 
 func set_elevation(e: int):
-	scale.y = e + 1
+	$MeshContainer.scale.y = e + 1
 	position.y = e
+
+func set_decoration_mesh():
+	for child in $DecorationContainer.get_children():
+		$DecorationContainer.remove_child(child)
+	match decoration:
+		'tree':
+			$DecorationContainer.add_child(Tree0.instantiate() if flip_a_coin() else Tree1.instantiate())
+		'rock':
+			$DecorationContainer.add_child(Rock0.instantiate() if flip_a_coin() else Rock1.instantiate())
+		'hill':
+			$DecorationContainer.add_child(Hill0.instantiate() if flip_a_coin() else Hill1.instantiate())
+		'tree-hill':
+			$DecorationContainer.add_child(TreeHill0.instantiate() if flip_a_coin() else TreeHill1.instantiate())
+		'none':
+			pass
+		_:
+			print('not implemented:', decoration)
 
 func set_mesh():
 	for child in $MeshContainer.get_children():
