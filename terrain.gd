@@ -78,7 +78,7 @@ func apply_natural_features():
 	var noise = FastNoiseLite.new()
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
 	noise.seed = randi()
-	noise.fractal_type = FastNoiseLite.FRACTAL_RIDGED
+	noise.fractal_type = FastNoiseLite.FRACTAL_PING_PONG
 	noise.fractal_octaves = 5
 	noise.fractal_gain = 0.5
 	noise.frequency = 0.01
@@ -94,7 +94,7 @@ func apply_natural_features():
 
 			var variant = int(10 * noise.get_noise_3d(q, r, s))
 			print(variant)
-			if variant in [2, 5, 6]:
+			if variant > 2: #in [2, 5, 6]:
 				tiles[to_cubic_coords_key(coord)]['decoration'] = 'tree'
 			if variant == -5:
 				tiles[to_cubic_coords_key(coord)]['decoration'] = 'rock'
