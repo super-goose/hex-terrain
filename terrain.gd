@@ -92,17 +92,22 @@ func apply_natural_features():
 			if tiles[to_cubic_coords_key(coord)]['type'] == 'water':
 				continue
 
+			if _is_cliff(tiles[to_cubic_coords_key(coord)]):
+				tiles[to_cubic_coords_key(coord)]['decoration'] = 'mountain'
+				continue
 			var variant = int(10 * noise.get_noise_3d(q, r, s))
-			print(variant)
-			if variant > 2: #in [2, 5, 6]:
+			if variant > 2:
 				tiles[to_cubic_coords_key(coord)]['decoration'] = 'tree'
-			if variant == -5:
+			if variant == -5 and randi_range(0, 3) == 0:
 				tiles[to_cubic_coords_key(coord)]['decoration'] = 'rock'
-			if variant == 2:
+			if variant == 2 and randi_range(0, 3) == 0:
 				tiles[to_cubic_coords_key(coord)]['decoration'] = 'hill'
 			if variant > 6:
 				tiles[to_cubic_coords_key(coord)]['decoration'] = 'tree-hill'
-			
+
+func _is_cliff(tile):
+	return false
+
 func _ready():
 	# define the tiles
 	generate_map()
@@ -175,6 +180,9 @@ func get_neighbors(x, z):
 	].map(
 		func _neighbor_map(key):
 			return tiles[key] if tiles.has(key) else null
+	).filter(
+		func _neighbor_filter(tile):
+			return tile != null
 	)
 
 '''

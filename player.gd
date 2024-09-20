@@ -29,9 +29,6 @@ func get_direction(delta: float):
 	if Input.is_action_pressed("ui_right"):
 		new_rotation -= ROTATION_SPEED * delta
 	if new_rotation != 0:
-		print('    delta: %s' % delta)
-		print('  degrees: %s' % new_rotation)
-		print('  radians: %s' % deg_to_rad(new_rotation))
 		rotate_y(deg_to_rad(new_rotation))
 
 	# Handle Jump.
